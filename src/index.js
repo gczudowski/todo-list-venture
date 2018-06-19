@@ -1,21 +1,21 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk';
 
-import Footer from './modules/common/footer/Footer'
-import AddTodo from './modules/todos/addTodo/AddTodoContainer'
-import TodoList from './modules/todos/todoList/TodoListContainer'
+import App from './modules/app/App'
 
 import rootReducer from './reducers'
 
+const store = createStore(
+    rootReducer,
+    applyMiddleware(thunk)
+);
+
 render(
-    <Provider store={ createStore(rootReducer) }>
-        <div>
-            <AddTodo />
-            <TodoList />
-            <Footer />
-        </div>
+    <Provider store={ store }>
+       <App />
     </Provider>,
     document.getElementById('root')
 );
