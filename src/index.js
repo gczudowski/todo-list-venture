@@ -3,10 +3,12 @@ import { render } from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
+import axios from 'axios';
 
 import App from './modules/app/App'
-
 import rootReducer from './reducers'
+
+axios.defaults.baseURL = 'https://todos.venturedevs.net/api';
 
 const store = createStore(
     rootReducer,
@@ -15,7 +17,7 @@ const store = createStore(
 
 render(
     <Provider store={ store }>
-       <App />
+        <App />
     </Provider>,
     document.getElementById('root')
 );

@@ -1,29 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem, ListItemText, ListItemSecondaryAction, IconButton } from '@material-ui/core';
-import { Edit } from '@material-ui/icons';
+import { Delete } from '@material-ui/icons';
 
-const Todo = ({ id, showEditDialog, completed, text, selectTodoList, selectedTodoList }) => (
-    <ListItem
-        button
-        onClick={ selectTodoList }
-        style={ selectedTodoList === id ? { backgroundColor: 'lightgrey' } : null }
-    >
+const ActionsListItem = ({ deleteTodoList, completed, text }) => (
+    <ListItem button>
         <ListItemText
             primary={ text }
         />
-        <ListItemSecondaryAction onClick={ showEditDialog }>
+        <ListItemSecondaryAction onClick={ deleteTodoList }>
             <IconButton>
-                <Edit />
+                <Delete />
             </IconButton>
         </ListItemSecondaryAction>
     </ListItem>
 );
 
-Todo.propTypes = {
+ActionsListItem.propTypes = {
     deleteTodoList: PropTypes.func.isRequired,
     completed: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired
 };
 
-export default Todo;
+export default ActionsListItem;

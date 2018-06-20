@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { TextField, Button } from '@material-ui/core';
 
-import { addTodoList } from './../../../actions';
+import { addAction } from './../../../actions';
 
-class AddTodo extends React.Component {
+class AddAction extends React.Component {
     constructor(props) {
         super(props);
 
@@ -17,10 +17,13 @@ class AddTodo extends React.Component {
     }
 
     render() {
+        console.log('######### #debug this.props', this.props);
+
         return (
-            <form onSubmit={ this.handleFormSubmit } autoComplete="off">
+            <form onSubmit={ this.handleFormSubmit } autoComplete="off" style={{ width: '70%', marginLeft: '30%'}}>
                 <TextField
-                    label="Enter list name"
+                    fullWidth
+                    label="Enter action name"
                     margin="normal"
                     onChange={ this.handleInputChange }
                     value={ this.state.inputValue }
@@ -40,7 +43,7 @@ class AddTodo extends React.Component {
         event.preventDefault();
 
         if (this.state.inputValue.trim()) {
-            this.props.dispatch(addTodoList(this.state.inputValue));
+            this.props.dispatch(addAction(this.state.inputValue, this.props.selectedTodoList));
 
             this.setState({
                 inputValue: ''
@@ -49,4 +52,4 @@ class AddTodo extends React.Component {
     }
 };
 
-export default connect()(AddTodo);
+export default connect()(AddAction);

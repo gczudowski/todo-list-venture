@@ -19,6 +19,16 @@ const todos = (state = [], action) => {
                 }
             });
 
+        case 'EDIT_TODO_LIST_SUCCESS':
+            return state.map((item) => {
+                console.log('######### #debug item', item);
+                return {
+                    id: item.id,
+                    text: item.id === action.id ? action.text : item.text,
+                    todos_count: item.todos_count
+                }
+            });
+
         case 'DELETE_TODO_LIST_SUCCESS':
             return state.filter(todo => todo.id !== action.id);
 
