@@ -31,31 +31,40 @@ class TodoList extends React.Component {
         this.deleteListItem = this.deleteListItem.bind(this);
     }
 
-
     componentDidMount() {
         this.props.updateTodoList();
     }
 
     render() {
+        console.log('######### #debug TodoListComponent render this.props', this.props.toodListFilter);
+
         return (
             <div>
                 <List>
-                    {this.props.todos.map(todo =>
-                        <TodoListItem
-                            key={ todo.id }
-                            { ...todo }
-                            selectTodoList={ () =>  { this.props.selectTodoList(todo.id); } }
-                            showEditDialog={ () =>  { this.showEditDialog(todo); } }
-                            selectedTodoList={ this.props.selectedTodoList }
-                        />
-                    )}
+                    {this.props.todos.map(todo => {
+                        if ((this.props.todoListFilter && todo.text.includes(this.props.todoListFilter))
+                                || !this.props.todoListFilter) {
+                            return (
+                                <TodoListItem
+                                    key={ todo.id }
+                                    { ...todo }
+                                    selectTodoList={ () =>  { this.props.selectTodoList(todo.id, todo.text); } }
+                                    showEditDialog={ () =>  { this.showEditDialog(todo); } }
+                                    selectedTodoList={ this.props.selectedTodoList }
+                                />
+                            );
+                        } else {
+                            return null;
+                        }
+
+                    })}
                 </List>
 
                 <Dialog
                     open={this.state.editDialogOpen}
                     onClose={this.handleClose}
                 >
-                    <DialogTitle>Edit list</DialogTitle>
+                    <DialogTitle>Edit action</DialogTitle>
                     <DialogContent>
                         <TextField
                             autoFocus

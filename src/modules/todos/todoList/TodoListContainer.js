@@ -4,13 +4,14 @@ import TodoList from './TodoListComponent';
 
 const mapStateToProps = state => ({
     todos: state.todos,
-    selectedTodoList: state.selectedTodoList
+    selectedTodoList: state.selectedTodoList,
+    todoListFilter: state.todoListFilter
 });
 
 const mapDispatchToProps = dispatch => ({
     updateTodoList: () => dispatch(updateTodoList()),
     deleteTodoList: id => dispatch(deleteTodoList(id)),
-    selectTodoList: id => dispatch(selectTodoList(id)),
+    selectTodoList: (id, text) => dispatch(selectTodoList(id, text)),
     editTodoListName: (id, name) => dispatch(editTodoListName(id, name)),
 });
 

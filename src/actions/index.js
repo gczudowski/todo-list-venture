@@ -5,11 +5,6 @@ export const setVisibilityFilter = filter => ({
     filter
 });
 
-export const toggleTodo = id => ({
-    type: 'TOGGLE_TODO',
-    id
-});
-
 export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
     SHOW_COMPLETED: 'SHOW_COMPLETED',
@@ -46,8 +41,6 @@ export const addTodoListSuccess = todoData => ({
 });
 
 export const editTodoListName = (id, name) => {
-    console.log('######### #debug editTodoListName action');
-    
     return dispatch => {
         return axios.put(`/todolists/${id}/`, {
             name
@@ -76,12 +69,13 @@ export const deleteTodoListSuccess = id => ({
     id
 });
 
-export const selectTodoList = id => {
+export const selectTodoList = (id, text) => {
     return dispatch => {
         dispatch(updateActionsList(id));
         dispatch({
             type: 'SELECT_TODO_LIST',
-            id
+            id,
+            text
         });
     }
 };
@@ -104,7 +98,7 @@ export const addAction = (name, selectedTodoList) => {
         return axios.post('/todos/', {
             name: name,
             is_complete: false,
-            todo_list: selectedTodoList
+            todo_list: selectedTodoList.id
         }).then((data) => {
             dispatch(addActionSuccess(data.data));
         });
@@ -118,3 +112,74 @@ export const addActionSuccess = actionData => ({
     todoList: actionData.todo_list,
     isComplete: actionData.is_complete
 });
+
+
+
+
+
+export const deleteActionItem = id => {
+    return dispatch => {
+        return axios.delete(`/todos/${id}`).then(() => {
+            dispatch(deleteActionItemSuccess(id));
+        });
+    }
+};
+
+export const deleteActionItemSuccess = id => ({
+    type: 'DELETE_ACTION_ITEM_SUCCESS',
+    id
+});
+
+
+export const editActionItemName = ({ id, name, parentId }) => {
+    return dispatch => {
+        return axios.put(`/todos/${id}/`, {
+            name,
+            todo_list: parentId
+        }).then((data) => {
+            dispatch(editActionItemNameSuccess(data.data));
+        });
+    }
+};
+
+export const editActionItemNameSuccess = todoData => ({
+    type: 'EDIT_ACTION_NAME_SUCCESS',
+    id: todoData.id,
+    text: todoData.name
+});
+
+export const toggleActionItem = ({ id, completed, parentId, name }) => {
+    return dispatch => {
+        return axios.put(`/todos/${id}/`, {
+            name,
+            is_complete: !completed,
+            todo_list: parentId
+        }).then((data) => {
+            dispatch(toggleActionItemSuccess(data.data));
+        });
+    }
+};
+
+export const toggleActionItemSuccess = todoData => ({
+    type: 'TOGGLE_ACTION_SUCCESS',
+    id: todoData.id,
+    completed: todoData.is_complete
+});
+
+export const updateTodoListFilter = filter => {
+    return dispatch => {
+        dispatch({
+            type: 'UPDATE_TODO_LIST_FILTER',
+            filter
+        });
+    }
+};
+
+export const updateActionsListFilter = filter => {
+    return dispatch => {
+        dispatch({
+            type: 'UPDATE_ACTIONS_LIST_FILTER',
+            filter
+        });
+    }
+};

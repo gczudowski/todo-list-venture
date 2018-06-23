@@ -21,7 +21,6 @@ const todos = (state = [], action) => {
 
         case 'EDIT_TODO_LIST_SUCCESS':
             return state.map((item) => {
-                console.log('######### #debug item', item);
                 return {
                     id: item.id,
                     text: item.id === action.id ? action.text : item.text,
@@ -31,13 +30,6 @@ const todos = (state = [], action) => {
 
         case 'DELETE_TODO_LIST_SUCCESS':
             return state.filter(todo => todo.id !== action.id);
-
-        case 'TOGGLE_TODO':
-            return state.map(todo =>
-                (todo.id === action.id)
-                    ? {...todo, completed: !todo.completed}
-                    : todo
-            );
 
         default:
             return state

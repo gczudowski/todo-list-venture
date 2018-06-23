@@ -1,13 +1,17 @@
 import { combineReducers } from 'redux';
 
 import todos from './todos';
-import visibilityFilter from './visibilityFilter';
+import selectedFilter from './selectedFilter';
 import actionsList from './actionsList';
 import selectedTodoList from './selectedTodoList';
+import todoListFilter from './todoListFilter';
+import actionsListFilter from './actionsListFilter';
 
 export default combineReducers({
     todos,
-    visibilityFilter,
+    selectedFilter,
     actionsList,
-    selectedTodoList
+    selectedTodoList,
+    todoListFilter,
+    actionsListFilter
 });

@@ -17,20 +17,15 @@ class AddAction extends React.Component {
     }
 
     render() {
-        console.log('######### #debug this.props', this.props);
-
         return (
-            <form onSubmit={ this.handleFormSubmit } autoComplete="off" style={{ width: '70%', marginLeft: '30%'}}>
+            <form onSubmit={ this.handleFormSubmit } autoComplete="off" style={{ margin: '-12px 15px' }}>
                 <TextField
-                    fullWidth
                     label="Enter action name"
                     margin="normal"
                     onChange={ this.handleInputChange }
                     value={ this.state.inputValue }
+                    fullWidth
                 />
-                <Button type="submit">
-                    Add Todo
-                </Button>
             </form>
         );
     }

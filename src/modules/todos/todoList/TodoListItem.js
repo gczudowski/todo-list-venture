@@ -7,7 +7,7 @@ const Todo = ({ id, showEditDialog, completed, text, selectTodoList, selectedTod
     <ListItem
         button
         onClick={ selectTodoList }
-        style={ selectedTodoList === id ? { backgroundColor: 'lightgrey' } : null }
+        style={ selectedTodoList.id === id ? { backgroundColor: 'lightgrey' } : null }
     >
         <ListItemText
             primary={ text }
@@ -21,7 +21,6 @@ const Todo = ({ id, showEditDialog, completed, text, selectTodoList, selectedTod
 );
 
 Todo.propTypes = {
-    deleteTodoList: PropTypes.func.isRequired,
     completed: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired
 };
