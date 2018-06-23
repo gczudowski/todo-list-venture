@@ -1,11 +1,11 @@
 const todoListFilter = (state = '', action) => {
     switch (action.type) {
 
-    case 'UPDATE_ACTIONS_LIST_FILTER':
-        return action.filter;
+        case 'UPDATE_ACTIONS_LIST_FILTER':
+            return action.filter;
 
-    default:
-        return state
+        default:
+            return state
     }
 };
 

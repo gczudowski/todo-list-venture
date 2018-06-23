@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { TextField, Button, InputAdornment } from '@material-ui/core';
+import { TextField, InputAdornment } from '@material-ui/core';
 import { Search as SearchIcon } from '@material-ui/icons';
 
 class Search extends React.Component {
@@ -18,7 +17,7 @@ class Search extends React.Component {
         return (
             <form autoComplete="off" style={{ margin: '0 10px 0' }}>
                 <TextField
-                    label="Find your list"
+                    label="Search"
                     margin="normal"
                     onChange={ this.handleInputChange }
                     value={ this.state.inputValue }
@@ -28,7 +27,7 @@ class Search extends React.Component {
                             <InputAdornment position="start">
                                 <SearchIcon />
                             </InputAdornment>
-                        ),
+                        )
                     }}
                 />
             </form>
@@ -36,9 +35,11 @@ class Search extends React.Component {
     }
 
     handleInputChange(event) {
-        this.setState({ inputValue: event.target.value });
+        const { value: inputValue } = event.target;
 
-        this.props.updateListFilter(event.target.value);
+        this.setState({ inputValue });
+
+        this.props.updateListFilter(inputValue);
     }
 }
 

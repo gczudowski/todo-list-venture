@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {
     AppBar,
     Tabs,
     Tab
 } from '@material-ui/core';
+
 import { VisibilityFilters } from './../../../actions'
 
-class ActionsStatusFilter extends React.Component {
+class FilterTabsComponent extends React.Component {
     constructor(props) {
         super(props);
 
@@ -37,7 +38,9 @@ class ActionsStatusFilter extends React.Component {
             value
         });
 
-        this.props.setVisibilityFilter(this.indexToFilter(value));
+        this.props.setVisibilityFilter(
+            this.indexToFilter(value)
+        );
     }
 
     indexToFilter(index) {
@@ -51,8 +54,8 @@ class ActionsStatusFilter extends React.Component {
     }
 }
 
-ActionsStatusFilter.propTypes = {
+FilterTabsComponent.propTypes = {
 
 };
 
-export default ActionsStatusFilter;
+export default FilterTabsComponent;

@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 
-import ActionsListItem from './ActionsListItem';
+import ActionsListItem from './ActionsListItemComponent';
 import { VisibilityFilters } from './../../../actions';
 
 class ActionsList extends React.Component {
@@ -34,32 +34,28 @@ class ActionsList extends React.Component {
     }
     
     render() {
+        const { actionsList, toggleActionItem, selectedFilter } = this.props;
+
         return (
             <div>
                 <List>
-                    {this.props.actionsList.map(todo => {
-                        if ((todo.completed && this.props.selectedFilter === VisibilityFilters.SHOW_COMPLETED
-                            || !todo.completed && this.props.selectedFilter === VisibilityFilters.SHOW_ACTIVE
-                            || this.props.selectedFilter === VisibilityFilters.SHOW_ALL)
-                            &&
-                            ((this.props.actionsListFilter && todo.text.includes(this.props.actionsListFilter))
-                            || !this.props.actionsListFilter)) {
+                    { actionsList.map(todo => {
+                        if (this.isItemMatchesVisibilityFilter(todo) && this.isItemMatchesSearchFilter(todo)) {
                             return (
                                 <ActionsListItem
-                                    key={todo.id}
-                                    {...todo}
-                                    toggleActionItem={this.props.toggleActionItem}
-                                    selectedFilter={this.props.selectedFilter}
-                                    showEditDialog={() => {
+                                    key={ todo.id }
+                                    { ...todo }
+                                    toggleActionItem={ toggleActionItem }
+                                    selectedFilter={ selectedFilter }
+                                    showEditDialog={ () => {
                                         this.showEditDialog(todo);
-                                    }}
+                                    } }
                                 />
                             )
                         } else {
                             return null;
                         }
-                    })
-                    }
+                    }) }
                 </List>
 
                 <Dialog
@@ -90,6 +86,17 @@ class ActionsList extends React.Component {
                 </Dialog>
             </div>
         );
+    }
+
+    isItemMatchesVisibilityFilter(todo) {
+        return (todo.completed && this.props.selectedFilter === VisibilityFilters.SHOW_COMPLETED)
+                || (!todo.completed && this.props.selectedFilter === VisibilityFilters.SHOW_ACTIVE)
+                || (this.props.selectedFilter === VisibilityFilters.SHOW_ALL);
+    }
+
+    isItemMatchesSearchFilter(todo) {
+        return (this.props.actionsListFilter && todo.text.includes(this.props.actionsListFilter))
+                || (!this.props.actionsListFilter)
     }
 
     showEditDialog(todo) {

@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 
-import TodoListItem from './TodoListItem';
+import TodoListItem from './TodoListItemComponent';
 
 class TodoList extends React.Component {
     constructor(props) {
@@ -36,8 +36,6 @@ class TodoList extends React.Component {
     }
 
     render() {
-        console.log('######### #debug TodoListComponent render this.props', this.props.toodListFilter);
-
         return (
             <div>
                 <List>
@@ -61,8 +59,8 @@ class TodoList extends React.Component {
                 </List>
 
                 <Dialog
-                    open={this.state.editDialogOpen}
-                    onClose={this.handleClose}
+                    open={ this.state.editDialogOpen }
+                    onClose={ this.handleClose }
                 >
                     <DialogTitle>Edit action</DialogTitle>
                     <DialogContent>
@@ -78,10 +76,10 @@ class TodoList extends React.Component {
                         <IconButton onClick={ this.deleteListItem }>
                             <Delete/>
                         </IconButton>
-                        <Button onClick={this.handleClose}>
+                        <Button onClick={ this.handleClose }>
                             Cancel
                         </Button>
-                        <Button onClick={this.saveListItem} color="primary">
+                        <Button onClick={ this.saveListItem } color="primary">
                             Save
                         </Button>
                     </DialogActions>
@@ -90,8 +88,8 @@ class TodoList extends React.Component {
         );
     }
 
-    showEditDialog(todo) {
-        this.setState({ editDialogOpen: true, editId: todo.id, inputValue: todo.text });
+    showEditDialog({ id, text }) {
+        this.setState({ editDialogOpen: true, editId: id, inputValue: text });
     }
 
     handleInputChange(event) {
@@ -99,8 +97,10 @@ class TodoList extends React.Component {
     }
 
     saveListItem() {
-        if (this.state.inputValue.trim()) {
-            this.props.editTodoListName(this.state.editId, this.state.inputValue);
+        const { inputValue, editId } = this.state;
+
+        if (inputValue.trim()) {
+            this.props.editTodoListName(editId, inputValue);
 
             this.setState({
                 inputValue: ''
@@ -131,8 +131,6 @@ TodoList.propTypes = {
     }).isRequired).isRequired,
     updateTodoList: PropTypes.func.isRequired,
     deleteTodoList: PropTypes.func.isRequired,
-    updateActionsList: PropTypes.func.isRequired,
-    showEditDialog: PropTypes.func.isRequired
 };
 
 export default TodoList;

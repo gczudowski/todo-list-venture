@@ -31,9 +31,9 @@ class ActionsListItem extends React.Component {
                         opacity: '0',
                         transition: 'opacity 300ms linear'
                     }
-            } ref='container'>
+            } ref='actionItemContainer'>
                 <ListItem button
-                          onClick={ () => { this.toggleItem() } }
+                          onClick={ this.toggleItem }
                 >
                     <Checkbox
                         checked={ checked }
@@ -53,22 +53,10 @@ class ActionsListItem extends React.Component {
     }
 
     toggleItem() {
-        const { id, completed, todoList, text } = this.props;
+        const { id, completed, todoList: parentId , text: name } = this.props;
 
-        if (completed  && this.props.selectedFilter === VisibilityFilters.SHOW_COMPLETED
-                || !completed && this.props.selectedFilter === VisibilityFilters.SHOW_ACTIVE) {
-
-            this.setState({
-                visible: false
-            });
-
-            setTimeout(() => {
-                const { container } = this.refs;
-
-                if (container) {
-                    container.style.display = 'none';
-                }
-            }, 300); // 300ms is animation delay
+        if (this.shouldHideItemAfterToggling()) {
+            this.hideItem();
         }
 
         this.setState({
@@ -78,14 +66,35 @@ class ActionsListItem extends React.Component {
         this.props.toggleActionItem({
             id,
             completed,
-            parentId: todoList,
-            name: text
+            parentId,
+            name
         });
+    }
+
+    shouldHideItemAfterToggling() {
+        const { completed, selectedFilter } = this.props;
+        const { SHOW_COMPLETED, SHOW_ACTIVE } = VisibilityFilters;
+
+        return (completed && selectedFilter === SHOW_COMPLETED)
+                || (!completed && selectedFilter === SHOW_ACTIVE);
+    }
+
+    hideItem() {
+        this.setState({
+            visible: false
+        });
+
+        setTimeout(() => {
+            const { actionItemContainer } = this.refs;
+
+            if (actionItemContainer) {
+                actionItemContainer.style.display = 'none';
+            }
+        }, 300); // 300ms is animation delay
     }
 }
 
 ActionsListItem.propTypes = {
-    deleteTodoList: PropTypes.func.isRequired,
     completed: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired
 };

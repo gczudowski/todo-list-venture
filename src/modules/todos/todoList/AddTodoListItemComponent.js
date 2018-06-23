@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {
     ListItem,
     ListItemSecondaryAction,
@@ -10,11 +10,10 @@ import {
     TextField,
     DialogActions,
     Button,
-    ListItemText,
     Divider
 } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import { addTodoList, editTodoListName } from './../../../actions';
+
 import { connect } from 'react-redux';
 
 class AddTodoListItem extends React.Component {
@@ -81,7 +80,7 @@ class AddTodoListItem extends React.Component {
 
     saveListItem() {
         if (this.state.inputValue.trim()) {
-            this.props.dispatch(addTodoList(this.state.inputValue));
+            this.props.addTodoList(this.state.inputValue);
 
             this.setState({
                 inputValue: ''
@@ -97,9 +96,6 @@ class AddTodoListItem extends React.Component {
 }
 
 AddTodoListItem.propTypes = {
-    deleteTodoList: PropTypes.func.isRequired,
-    completed: PropTypes.bool.isRequired,
-    text: PropTypes.string.isRequired
 };
 
 export default connect()(AddTodoListItem);

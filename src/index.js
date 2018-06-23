@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
 import axios from 'axios';
 
-import App from './modules/app/App'
+import App from './modules/app/main/MainContainer'
 import rootReducer from './reducers'
 
 axios.defaults.baseURL = 'https://todos.venturedevs.net/api';
