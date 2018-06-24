@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import AddAction from './AddActionComponent';
-import { addAction } from '../../../actions';
+import { addAction } from './actions';
 
 const mapStateToProps = state => ({
     selectedTodoList: state.selectedTodoList

@@ -2,10 +2,12 @@ import React from 'react';
 import { Drawer, List } from '@material-ui/core';
 import { withStyles, createStyles } from '@material-ui/core/styles'
 
-import TodoList from '../../todos/todoList/TodoListContainer';
-import AddTodoListItem from '../../todos/todoList/AddTodoListItemContainer';
-import TodoSearch from '../../todos/search/TodoSearchContainer';
-import AppContent from '../content/AppContentContainer';
+import TodoList from './../../todos/todoList/TodoListContainer';
+import AddTodoListItem from './../../todos/todoList/AddTodoListItemContainer';
+import TodoSearch from './../../todos/search/TodoSearchContainer';
+import AppContent from './../content/AppContentContainer';
+
+import DialogBox from './../../common/dialog/DialogBoxComponent';
 
 const App = props => (
     <div>
@@ -21,6 +23,8 @@ const App = props => (
             ? <AppContent />
             : null
         }
+
+        <DialogBox />
 
     </div>
 );

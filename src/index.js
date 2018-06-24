@@ -1,22 +1,16 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk';
 import axios from 'axios';
 
+import CONFIG from './config/config';
 import App from './modules/app/main/MainContainer'
-import rootReducer from './reducers'
+import configureStore from './store/configureStore';
 
-axios.defaults.baseURL = 'https://todos.venturedevs.net/api';
-
-const store = createStore(
-    rootReducer,
-    applyMiddleware(thunk)
-);
+axios.defaults.baseURL = CONFIG.API_URL;
 
 render(
-    <Provider store={ store }>
+    <Provider store={ configureStore() }>
         <App />
     </Provider>,
     document.getElementById('root')

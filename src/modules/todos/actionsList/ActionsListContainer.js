@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { toggleActionItem, deleteActionItem, editActionItemName } from './../../../actions';
+import { toggleActionItem, deleteActionItem, editActionItemName } from './actions';
 import ActionsList from './ActionsListComponent';
 
 const mapStateToProps = state => ({
