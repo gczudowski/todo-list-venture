@@ -4,9 +4,9 @@ import AddTodoListItem from './AddTodoListItemComponent';
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => ({
-    addTodoList: inputValue => dispatch(addTodoList(inputValue)),
-});
+const mapDispatchToProps = {
+    addTodoList
+};
 
 export default connect(
     mapStateToProps,

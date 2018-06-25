@@ -1,22 +1,22 @@
 import axios from 'axios';
 
-export const addAction = (name, selectedTodoList) => {
-    return dispatch => {
-        return axios.post('/todos/', {
+export const addAction = (name, selectedTodoList) => (
+    dispatch => (
+        axios.post('/todos/', {
             name: name,
             is_complete: false,
             todo_list: selectedTodoList.id
         }).then((data) => {
             dispatch(addActionSuccess(data.data));
-        });
-    }
-};
+        })
+    )
+);
 
-export const addActionSuccess = actionData => ({
+export const addActionSuccess = ({ id, name: text, todo_list: todoList, is_complete: isComplete }) => ({
     type: 'ADD_ACTION_SUCCESS',
-    id: actionData.id,
-    text: actionData.name,
-    todoList: actionData.todo_list,
-    isComplete: actionData.is_complete
+    id,
+    text,
+    todoList,
+    isComplete,
 });
 

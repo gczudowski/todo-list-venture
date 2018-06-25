@@ -8,9 +8,9 @@ const mapStateToProps = state => ({
     selectedTodoList: state.selectedTodoList
 });
 
-const mapDispatchToProps = dispatch => ({
-    setVisibilityFilter: filter => dispatch(setVisibilityFilter(filter)),
-});
+const mapDispatchToProps = {
+    setVisibilityFilter
+};
 
 export default connect(
     mapStateToProps,

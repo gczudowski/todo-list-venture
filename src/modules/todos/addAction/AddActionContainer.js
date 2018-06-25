@@ -7,9 +7,9 @@ const mapStateToProps = state => ({
     selectedTodoList: state.selectedTodoList
 });
 
-const mapDispatchToProps = dispatch => ({
-    addAction: (inputValue, selectedTodoList) => dispatch(addAction(inputValue, selectedTodoList)),
-});
+const mapDispatchToProps = {
+    addAction
+};
 
 export default connect(
     mapStateToProps,

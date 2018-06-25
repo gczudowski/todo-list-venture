@@ -8,12 +8,12 @@ const mapStateToProps = state => ({
     todoListFilter: state.todoListFilter
 });
 
-const mapDispatchToProps = dispatch => ({
-    updateTodoList: () => dispatch(updateTodoList()),
-    deleteTodoList: id => dispatch(deleteTodoList(id)),
-    selectTodoList: (id, text) => dispatch(selectTodoList(id, text)),
-    editTodoListName: (id, name) => dispatch(editTodoListName(id, name)),
-});
+const mapDispatchToProps = {
+    updateTodoList,
+    deleteTodoList,
+    selectTodoList,
+    editTodoListName
+};
 
 export default connect(
     mapStateToProps,

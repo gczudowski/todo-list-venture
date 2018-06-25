@@ -1,37 +1,37 @@
 import axios from "axios/index";
 
-export const addTodoList = name => {
-    return dispatch => {
-        return axios.post('/todolists/', {
+export const addTodoList = name => (
+    dispatch => (
+        axios.post('/todolists/', {
             name
-        }).then((data) => {
-            dispatch(addTodoListSuccess(data.data));
-        });
-    }
-};
+        }).then(data => (
+            dispatch(addTodoListSuccess(data.data))
+        ))
+    )
+);
 
-export const addTodoListSuccess = todoData => ({
+export const addTodoListSuccess = ({ id, name: text }) => ({
     type: 'ADD_TODO_LIST_SUCCESS',
-    id: todoData.id,
-    text: todoData.name
+    id,
+    text
 });
 
 
-export const updateTodoList = () => {
-    return dispatch => {
-        return axios.get('/todolists/').then((data) => {
-            dispatch(updateTodoListSuccess(data.data));
-        });
-    }
-};
+export const updateTodoList = () => (
+    dispatch => (
+        axios.get('/todolists/').then((data) => (
+            dispatch(updateTodoListSuccess(data.data))
+        ))
+    )
+);
 
-export const deleteTodoList = id => {
-    return dispatch => {
-        return axios.delete(`/todolists/${id}`).then(() => {
-            dispatch(deleteTodoListSuccess(id));
-        });
-    }
-};
+export const deleteTodoList = id => (
+    dispatch => (
+        axios.delete(`/todolists/${id}`).then(() => (
+            dispatch(deleteTodoListSuccess(id))
+        ))
+    )
+);
 
 export const deleteTodoListSuccess = id => ({
     type: 'DELETE_TODO_LIST_SUCCESS',
@@ -43,8 +43,8 @@ export const updateTodoListSuccess = todoList => ({
     todoList
 });
 
-export const selectTodoList = (id, text) => {
-    return dispatch => {
+export const selectTodoList = (id, text) => (
+    dispatch => {
         dispatch(updateActionsList(id));
         dispatch({
             type: 'SELECT_TODO_LIST',
@@ -52,7 +52,7 @@ export const selectTodoList = (id, text) => {
             text
         });
     }
-};
+);
 
 export const updateActionsList = id => {
     return dispatch => {
@@ -67,15 +67,15 @@ export const updateActionsListSuccess = actionsList => ({
     actionsList
 });
 
-export const editTodoListName = (id, name) => {
-    return dispatch => {
-        return axios.put(`/todolists/${id}/`, {
+export const editTodoListName = (id, name) => (
+    dispatch => (
+        axios.put(`/todolists/${id}/`, {
             name
         }).then((data) => {
             dispatch(editTodoListNameSuccess(data.data));
-        });
-    }
-};
+        })
+    )
+);
 
 export const editTodoListNameSuccess = todoData => ({
     type: 'EDIT_TODO_LIST_SUCCESS',

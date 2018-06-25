@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 
-import TodoListItem from './TodoListItemComponent';
 
 class TodoList extends React.Component {
     constructor(props) {
@@ -32,7 +31,7 @@ class TodoList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.updateTodoList();
+        // this.props.updateTodoList();
     }
 
     render() {
