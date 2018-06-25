@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 import { updateTodoList, deleteTodoList, selectTodoList, editTodoListName } from './actions';
+import { showModalBox } from './../../../actions';
+
 import TodoList from './TodoListComponent';
 
 const mapStateToProps = state => ({
@@ -12,7 +14,8 @@ const mapDispatchToProps = {
     updateTodoList,
     deleteTodoList,
     selectTodoList,
-    editTodoListName
+    editTodoListName,
+    showModalBox
 };
 
 export default connect(

@@ -67,7 +67,7 @@ export const updateActionsListSuccess = actionsList => ({
     actionsList
 });
 
-export const editTodoListName = (id, name) => (
+export const editTodoListName = (name, id) => (
     dispatch => (
         axios.put(`/todolists/${id}/`, {
             name

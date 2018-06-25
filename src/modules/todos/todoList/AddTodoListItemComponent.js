@@ -43,7 +43,7 @@ class AddTodoListItem extends React.Component {
         this.props.showModalBox({
             title: 'New todo list',
             inputLabel: 'List name',
-            inputValue: 'test',
+            inputValue: '',
             save: this.props.addTodoList
         });
     }

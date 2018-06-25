@@ -16,7 +16,7 @@ class TodoList extends React.Component {
         super(props);
 
         this.state = {
-            inputValue: props.inputValue,
+            inputValue: null,
             editId: null
         };
 
@@ -26,7 +26,17 @@ class TodoList extends React.Component {
         this.delete = this.delete.bind(this);
     }
 
+    componentDidUpdate() {
+        if (this.state.inputValue === null && this.props.modalBox.inputValue) {
+            this.setState({
+                inputValue: this.props.modalBox.inputValue
+            });
+        }
+    }
+
     render() {
+
+
         return (
             <Dialog
                 open={ this.props.modalBox.isModalVisible }
@@ -66,25 +76,28 @@ class TodoList extends React.Component {
 
     save() {
         if (this.state.inputValue.trim()) {
-            this.props.modalBox.save(this.state.inputValue);
-
-            this.setState({
-                inputValue: ''
-            });
+            this.props.modalBox.save(
+                this.state.inputValue,
+                this.props.modalBox.editId
+            );
         }
 
         this.close();
     }
 
     delete() {
-        // this.props.deleteTodoList(
-        //     this.state.editId
-        // );
+        this.props.modalBox.delete(
+            this.props.modalBox.editId
+        );
 
         this.close();
     }
 
     close() {
+        this.setState({
+            inputValue: null
+        });
+
         this.props.hideModalBox();
         // this.setState({ isDialogOpen: false });
     }

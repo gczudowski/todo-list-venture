@@ -13,22 +13,13 @@ import {
 import { Delete } from '@material-ui/icons';
 
 import TodoListItem from './TodoListItemComponent';
+import {deleteTodoList} from "./actions";
 
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            editDialogOpen: false,
-            inputValue: '',
-            editId: null
-        };
-
-        this.showEditDialog = this.showEditDialog.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.saveListItem = this.saveListItem.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.deleteListItem = this.deleteListItem.bind(this);
+        this.showModalBox = this.showModalBox.bind(this);
     }
 
     componentDidMount() {
@@ -37,89 +28,36 @@ class TodoList extends React.Component {
 
     render() {
         return (
-            <div>
-                <List>
-                    {this.props.todos.map(todo => {
-                        if ((this.props.todoListFilter && todo.text.includes(this.props.todoListFilter))
-                                || !this.props.todoListFilter) {
-                            return (
-                                <TodoListItem
-                                    key={ todo.id }
-                                    { ...todo }
-                                    selectTodoList={ () =>  { this.props.selectTodoList(todo.id, todo.text); } }
-                                    showEditDialog={ () =>  { this.showEditDialog(todo); } }
-                                    selectedTodoList={ this.props.selectedTodoList }
-                                />
-                            );
-                        } else {
-                            return null;
-                        }
-
-                    })}
-                </List>
-
-                <Dialog
-                    open={ this.state.editDialogOpen }
-                    onClose={ this.handleClose }
-                >
-                    <DialogTitle>Edit action</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            autoFocus
-                            label="List name"
-                            fullWidth
-                            onChange={ this.handleInputChange }
-                            value={ this.state.inputValue }
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <IconButton onClick={ this.deleteListItem }>
-                            <Delete/>
-                        </IconButton>
-                        <Button onClick={ this.handleClose }>
-                            Cancel
-                        </Button>
-                        <Button onClick={ this.saveListItem } color="primary">
-                            Save
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
+            <List>
+                {this.props.todos.map(todo => {
+                    if ((this.props.todoListFilter && todo.text.includes(this.props.todoListFilter))
+                            || !this.props.todoListFilter) {
+                        return (
+                            <TodoListItem
+                                key={ todo.id }
+                                { ...todo }
+                                selectTodoList={ () =>  { this.props.selectTodoList(todo.id, todo.text); } }
+                                showEditDialog={ () =>  { this.showModalBox(todo); } }
+                                selectedTodoList={ this.props.selectedTodoList }
+                            />
+                        );
+                    } else {
+                        return null;
+                    }
+                })}
+            </List>
         );
     }
 
-    showEditDialog({ id, text }) {
-        this.setState({ editDialogOpen: true, editId: id, inputValue: text });
-    }
-
-    handleInputChange(event) {
-        this.setState({ inputValue: event.target.value });
-    }
-
-    saveListItem() {
-        const { inputValue, editId } = this.state;
-
-        if (inputValue.trim()) {
-            this.props.editTodoListName(editId, inputValue);
-
-            this.setState({
-                inputValue: ''
-            });
-        }
-
-        this.handleClose();
-    }
-
-    deleteListItem() {
-        this.props.deleteTodoList(
-            this.state.editId
-        );
-
-        this.handleClose();
-    }
-
-    handleClose() {
-        this.setState({ editDialogOpen: false });
+    showModalBox({ id, text }) {
+        this.props.showModalBox({
+            title: 'Edit todo list',
+            inputLabel: 'List name',
+            inputValue: text,
+            editId: id,
+            save: this.props.editTodoListName,
+            delete: this.props.deleteTodoList
+        });
     }
 }
 
