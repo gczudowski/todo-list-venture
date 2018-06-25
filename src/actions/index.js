@@ -3,14 +3,21 @@ export const setVisibilityFilter = filter => ({
     filter
 });
 
+export const showModalBox = (modalBoxData) => {
+    console.log();
+
+    return {
+        type: 'SHOW_MODAL_BOX',
+        ...modalBoxData
+    }
+};
+
+export const hideModalBox = () => ({
+    type: 'HIDE_MODAL_BOX'
+});
+
 export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
     SHOW_COMPLETED: 'SHOW_COMPLETED',
     SHOW_ACTIVE: 'SHOW_ACTIVE'
 };
-
-export const showDialogBox = ({ editId = null, inputValue = null }) => ({
-    type: 'SHOW_MODAL_BOX',
-    editId,
-    inputValue
-});

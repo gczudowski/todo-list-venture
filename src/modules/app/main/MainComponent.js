@@ -6,7 +6,7 @@ import TodoList from './../../todos/todoList/TodoListContainer';
 import AddTodoListItem from './../../todos/todoList/AddTodoListItemContainer';
 import TodoSearch from './../../todos/search/TodoSearchContainer';
 import AppContent from './../content/AppContentContainer';
-// import ModalBox from './../../common/dialog/ModalBoxContainer';
+import ModalBox from './../../common/dialog/ModalBoxContainer';
 
 const App = props => (
     <div>
@@ -23,7 +23,7 @@ const App = props => (
             : null
         }
 
-        {/*<ModalBox />*/}
+        <ModalBox />
     </div>
 );
 

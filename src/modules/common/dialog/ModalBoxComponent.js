@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-    List,
     Dialog,
     DialogTitle,
     DialogContent,
@@ -12,52 +11,48 @@ import {
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 
-
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isDialogOpen: false,
-            inputValue: '',
+            inputValue: props.inputValue,
             editId: null
         };
 
-        this.showEditDialog = this.showEditDialog.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.saveListItem = this.saveListItem.bind(this);
+        this.close = this.close.bind(this);
+        this.save = this.save.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.deleteListItem = this.deleteListItem.bind(this);
-    }
-
-    componentDidMount() {
-        // this.props.updateTodoList();
+        this.delete = this.delete.bind(this);
     }
 
     render() {
         return (
             <Dialog
-                open={ this.state.isDialogOpen }
-                onClose={ this.handleClose }
+                open={ this.props.modalBox.isModalVisible }
+                onClose={ this.close }
             >
-                <DialogTitle>Edit action</DialogTitle>
+                <DialogTitle>{ this.props.modalBox.title }</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
-                        label="List name"
+                        label={ this.props.modalBox.inputLabel }
                         fullWidth
                         onChange={ this.handleInputChange }
                         value={ this.state.inputValue }
                     />
                 </DialogContent>
                 <DialogActions>
-                    <IconButton onClick={ this.deleteListItem }>
-                        <Delete/>
-                    </IconButton>
-                    <Button onClick={ this.handleClose }>
+                    { this.props.modalBox.delete ?
+                        <IconButton onClick={ this.delete }>
+                            <Delete/>
+                        </IconButton>
+                        : null
+                    }
+                    <Button onClick={ this.close }>
                         Cancel
                     </Button>
-                    <Button onClick={ this.saveListItem } color="primary">
+                    <Button onClick={ this.save } color="primary">
                         Save
                     </Button>
                 </DialogActions>
@@ -65,38 +60,33 @@ class TodoList extends React.Component {
         );
     }
 
-    showEditDialog({ id, text }) {
-        this.setState({ isDialogOpen: true, editId: id, inputValue: text });
-    }
-
     handleInputChange(event) {
         this.setState({ inputValue: event.target.value });
     }
 
-    saveListItem() {
-        const { inputValue, editId } = this.state;
-
-        if (inputValue.trim()) {
-            this.props.editTodoListName(editId, inputValue);
+    save() {
+        if (this.state.inputValue.trim()) {
+            this.props.modalBox.save(this.state.inputValue);
 
             this.setState({
                 inputValue: ''
             });
         }
 
-        this.handleClose();
+        this.close();
     }
 
-    deleteListItem() {
-        this.props.deleteTodoList(
-            this.state.editId
-        );
+    delete() {
+        // this.props.deleteTodoList(
+        //     this.state.editId
+        // );
 
-        this.handleClose();
+        this.close();
     }
 
-    handleClose() {
-        this.setState({ isDialogOpen: false });
+    close() {
+        this.props.hideModalBox();
+        // this.setState({ isDialogOpen: false });
     }
 }
 
