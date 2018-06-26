@@ -23,38 +23,36 @@ class TodoList extends React.Component {
         this.close = this.close.bind(this);
         this.save = this.save.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.delete = this.delete.bind(this);
+        this.deleteAction = this.deleteAction.bind(this);
     }
 
     componentDidUpdate() {
-        if (this.state.inputValue === null && this.props.modalBox.inputValue) {
+        if (this.state.inputValue === null && this.props.inputValue) {
             this.setState({
-                inputValue: this.props.modalBox.inputValue
+                inputValue: this.props.inputValue
             });
         }
     }
 
     render() {
-
-
         return (
             <Dialog
-                open={ this.props.modalBox.isModalVisible }
+                open={ this.props.isModalVisible }
                 onClose={ this.close }
             >
-                <DialogTitle>{ this.props.modalBox.title }</DialogTitle>
+                <DialogTitle>{ this.props.title }</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
-                        label={ this.props.modalBox.inputLabel }
+                        label={ this.props.inputLabel }
                         fullWidth
                         onChange={ this.handleInputChange }
                         value={ this.state.inputValue }
                     />
                 </DialogContent>
                 <DialogActions>
-                    { this.props.modalBox.delete ?
-                        <IconButton onClick={ this.delete }>
+                    { this.props.delete ?
+                        <IconButton onClick={ this.deleteAction }>
                             <Delete/>
                         </IconButton>
                         : null
@@ -76,18 +74,18 @@ class TodoList extends React.Component {
 
     save() {
         if (this.state.inputValue.trim()) {
-            this.props.modalBox.save(
+            this.props.save(
                 this.state.inputValue,
-                this.props.modalBox.editId
+                this.props.editId
             );
         }
 
         this.close();
     }
 
-    delete() {
-        this.props.modalBox.delete(
-            this.props.modalBox.editId
+    deleteAction() {
+        this.props.delete(
+            this.props.editId
         );
 
         this.close();
@@ -99,7 +97,6 @@ class TodoList extends React.Component {
         });
 
         this.props.hideModalBox();
-        // this.setState({ isDialogOpen: false });
     }
 }
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from "react-redux";
 
-import { hideModalBox } from './../../../actions';
+import { hideModalBox } from './actions';
 import ModalBox from './ModalBoxComponent';
 
 const mapStateToProps = state => ({
-    modalBox: state.modalBox
+    ...state.modalBox
 });
 
 const mapDispachToProps = {
