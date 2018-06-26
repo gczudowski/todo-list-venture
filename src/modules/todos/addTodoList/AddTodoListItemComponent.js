@@ -15,7 +15,7 @@ import {
 import { Add } from '@material-ui/icons';
 
 import { connect } from 'react-redux';
-import {showModalBox} from "../../../actions";
+import {showModalBox} from "../../../actions/index";
 
 class AddTodoListItem extends React.Component {
     constructor(props) {

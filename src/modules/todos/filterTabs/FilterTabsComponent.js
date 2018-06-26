@@ -6,7 +6,7 @@ import {
     Tab
 } from '@material-ui/core';
 
-import { VisibilityFilters } from './../../../actions'
+import VisibilityFilters from '../../../constants/visibilityFilters';
 
 class FilterTabsComponent extends React.Component {
     constructor(props) {

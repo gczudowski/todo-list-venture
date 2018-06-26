@@ -1,18 +1,18 @@
 const selectedFilter = (state = { isModalVisible: false }, action) => {
     switch (action.type) {
-    case 'SHOW_MODAL_BOX':
-        return {
-            ...action,
-            isModalVisible: true
-        };
+        case 'SHOW_MODAL_BOX':
+            return {
+                ...action,
+                isModalVisible: true
+            };
 
-    case 'HIDE_MODAL_BOX':
-        return {
-            isModalVisible: false
-        };
+        case 'HIDE_MODAL_BOX':
+            return {
+                isModalVisible: false
+            };
 
-    default:
-        return state;
+        default:
+            return state;
     }
 };
 

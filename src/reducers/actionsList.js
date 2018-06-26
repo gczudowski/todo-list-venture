@@ -1,6 +1,5 @@
 const todos = (state = [], action) => {
     switch (action.type) {
-
         case 'ADD_ACTION_SUCCESS':
             return [
                 ...state,

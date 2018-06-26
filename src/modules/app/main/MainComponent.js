@@ -3,7 +3,7 @@ import { Drawer, List } from '@material-ui/core';
 import { withStyles, createStyles } from '@material-ui/core/styles'
 
 import TodoList from './../../todos/todoList/TodoListContainer';
-import AddTodoListItem from './../../todos/todoList/AddTodoListItemContainer';
+import AddTodoListItem from '../../todos/addTodoList/AddTodoListItemContainer';
 import TodoSearch from './../../todos/search/TodoSearchContainer';
 import AppContent from './../content/AppContentContainer';
 import ModalBox from './../../common/dialog/ModalBoxContainer';

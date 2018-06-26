@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem, ListItemText, ListItemSecondaryAction, IconButton, Checkbox } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
-import { VisibilityFilters } from './../../../actions';
+import VisibilityFilters from './../../../constants/visibilityFilters';
 
 class ActionsListItem extends React.Component {
     constructor(props) {

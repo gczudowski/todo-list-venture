@@ -1,138 +1,81 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-    List,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    TextField,
-    DialogActions,
-    Button,
-    IconButton
+    List
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 
 import ActionsListItem from './ActionsListItemComponent';
-import { VisibilityFilters } from './../../../actions';
+import VisibilityFilters from './../../../constants/visibilityFilters';
 
 class ActionsList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            editDialogOpen: false,
-            inputValue: '',
-            editId: null,
-            parentId: null
-        };
-
-        this.showEditDialog = this.showEditDialog.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.saveActionItem = this.saveActionItem.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.deleteActionItem = this.deleteActionItem.bind(this);
+        this.showModalBox = this.showModalBox.bind(this);
+        this.save = this.save.bind(this);
     }
     
     render() {
         const { actionsList, toggleActionItem, selectedFilter } = this.props;
 
         return (
-            <div>
-                <List>
-                    { actionsList.map(todo => {
-                        if (this.isItemMatchesVisibilityFilter(todo) && this.isItemMatchesSearchFilter(todo)) {
-                            return (
-                                <ActionsListItem
-                                    key={ todo.id }
-                                    { ...todo }
-                                    toggleActionItem={ toggleActionItem }
-                                    selectedFilter={ selectedFilter }
-                                    showEditDialog={ () => {
-                                        this.showEditDialog(todo);
-                                    } }
-                                />
-                            )
-                        } else {
-                            return null;
-                        }
-                    }) }
-                </List>
-
-                <Dialog
-                    open={this.state.editDialogOpen}
-                    onClose={this.handleClose}
-                >
-                    <DialogTitle>Edit action</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            autoFocus
-                            label="Action name"
-                            fullWidth
-                            onChange={ this.handleInputChange }
-                            value={ this.state.inputValue }
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <IconButton onClick={ this.deleteActionItem }>
-                            <Delete/>
-                        </IconButton>
-                        <Button onClick={this.handleClose}>
-                            Cancel
-                        </Button>
-                        <Button onClick={this.saveActionItem} color="primary">
-                            Save
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
+            <List>
+                { actionsList.map(todo => {
+                    if (this.isItemMatchesVisibilityFilter(todo) && this.isItemMatchesSearchFilter(todo)) {
+                        return (
+                            <ActionsListItem
+                                key={ todo.id }
+                                { ...todo }
+                                toggleActionItem={ toggleActionItem }
+                                selectedFilter={ selectedFilter }
+                                showEditDialog={ () => {
+                                    this.showModalBox(todo);
+                                } }
+                            />
+                        )
+                    } else {
+                        return null;
+                    }
+                }) }
+            </List>
         );
     }
 
     isItemMatchesVisibilityFilter(todo) {
-        return (todo.completed && this.props.selectedFilter === VisibilityFilters.SHOW_COMPLETED)
-                || (!todo.completed && this.props.selectedFilter === VisibilityFilters.SHOW_ACTIVE)
-                || (this.props.selectedFilter === VisibilityFilters.SHOW_ALL);
+        const { selectedFilter } = this.props;
+        const { completed } = todo;
+        const { SHOW_COMPLETED, SHOW_ACTIVE, SHOW_ALL } = VisibilityFilters;
+
+        return (completed && selectedFilter === SHOW_COMPLETED)
+                || (!completed && selectedFilter === SHOW_ACTIVE)
+                || (selectedFilter === SHOW_ALL);
     }
 
     isItemMatchesSearchFilter(todo) {
-        return (this.props.actionsListFilter && todo.text.includes(this.props.actionsListFilter))
-                || (!this.props.actionsListFilter)
+        const { actionsListFilter } = this.props;
+
+        return (actionsListFilter && todo.text.includes(actionsListFilter))
+                || (!actionsListFilter);
     }
 
-    showEditDialog(todo) {
-        this.setState({ editDialogOpen: true, editId: todo.id, inputValue: todo.text, parentId: todo.todoList });
+    showModalBox({ id, text, todoList }) {
+        this.props.showModalBox({
+            title: 'Edit action',
+            inputLabel: 'Action name',
+            inputValue: text,
+            editId: id,
+            save: (name) => this.save({ id, name, todoList }),
+            delete: this.props.deleteActionItem
+        });
     }
 
-    handleInputChange(event) {
-        this.setState({ inputValue: event.target.value });
-    }
-
-    saveActionItem() {
-        if (this.state.inputValue.trim()) {
-            this.props.editActionItemName({
-                id: this.state.editId,
-                name: this.state.inputValue,
-                parentId: this.state.parentId
-            });
-
-            this.setState({
-                inputValue: ''
-            });
-        }
-
-        this.handleClose();
-    }
-
-    deleteActionItem() {
-        this.props.deleteActionItem(
-            this.state.editId
-        );
-
-        this.handleClose();
-    }
-
-    handleClose() {
-        this.setState({ editDialogOpen: false });
+    save({ id, name, todoList: parentId }) {
+        this.props.editActionItemName({
+            id,
+            name,
+            parentId
+        });
     }
 }
 

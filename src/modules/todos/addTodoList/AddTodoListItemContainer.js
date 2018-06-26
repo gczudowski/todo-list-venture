@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { addTodoList } from './actions';
-import { showModalBox } from './../../../actions';
+import { showModalBox } from '../../../actions';
 import AddTodoListItem from './AddTodoListItemComponent';
 
 const mapDispatchToProps = {
